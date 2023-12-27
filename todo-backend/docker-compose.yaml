@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_DB: pvl
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-boot-app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
