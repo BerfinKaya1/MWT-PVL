@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Todo App</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Todo List</h1>
+    <ul id="todoList">
+    </ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('http://localhost:8081/todos')
+                .then(response => response.json())
+                .then(data => {
+                    const todoList = document.getElementById('todoList');
+
+                    data.forEach(todo => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = todo.name;
+
+                        if (todo.completed) {
+                            listItem.classList.add('completed');
+                        }
+
+                        todoList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+
+</html>
